@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-copilot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: delivery-copilot
+  template:
+    metadata:
+      labels:
+        app: delivery-copilot
+    spec:
+      containers:
+      - name: app
+        image: ghcr.io/example/delivery-copilot:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe: { httpGet: { path: /healthz, port: 8080 } }
+        readinessProbe: { httpGet: { path: /healthz, port: 8080 } }
